@@ -1,30 +1,21 @@
 "use client";
 import React, { createContext, useState } from "react";
 
-interface TeeTime {
-  // Define the properties of a tee time object
-  id: number;
-  date: Date;
-  startTime: Date;
-  endTime: Date;
-  // ... other properties
-}
-
 interface TeeTimeContext {
-  teeTimes: TeeItUpTeeTime[];
-  setTeeTimes: React.Dispatch<React.SetStateAction<TeeItUpTeeTime[]>>;
+  courseTeeTimes: CourseTeeTimes[];
+  setCourseTeeTimes: React.Dispatch<React.SetStateAction<CourseTeeTimes[]>>;
 }
 
 const TeeTimeContext = createContext<TeeTimeContext>({
-  teeTimes: [],
-  setTeeTimes: () => {},
+  courseTeeTimes: [],
+  setCourseTeeTimes: () => {},
 });
 
 const TeeTimeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [teeTimes, setTeeTimes] = useState<TeeItUpTeeTime[]>([]);
+  const [courseTeeTimes, setCourseTeeTimes] = useState<CourseTeeTimes[]>([]);
 
   return (
-    <TeeTimeContext.Provider value={{ teeTimes, setTeeTimes }}>
+    <TeeTimeContext.Provider value={{ courseTeeTimes, setCourseTeeTimes }}>
       {children}
     </TeeTimeContext.Provider>
   );
