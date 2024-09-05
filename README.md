@@ -70,4 +70,3 @@ This project is licensed under the [MIT License](LICENSE).
 ## Acknowledgements
 
 - Inspired by existing tee time services like GolfNow, but designed to provide a faster and more user-friendly experience.
-```
