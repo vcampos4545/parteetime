@@ -26,9 +26,9 @@ Finding available tee times can take 5+ minutes per course, especially when you 
 ## Tech Stack
 
 - **Frontend**: React.js, Next.js
-- **Backend**: Node.js, REST APIs
-- **Database**: [Add Database Solution if applicable]
-- **Hosting**: [Add Hosting Solution if applicable]
+- **Backend**: Next.js, REST APIs
+- **Database**: Supabase
+- **Hosting**: Vercel
 
 ## Getting Started
 
@@ -36,13 +36,13 @@ To run this project locally, follow these steps:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/parteetime.git
+    git clone https://github.com/vcampos4545/parteetime.git
     ```
 
 2. Install dependencies:
     ```bash
     cd parteetime
-    npm install
+    yarn install
     ```
 
 3. Start the development server:
