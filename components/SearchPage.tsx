@@ -1,7 +1,6 @@
 "use client";
 import { TeeTimeContext } from "@/components/TeeTimeContext";
 import {
-  Accordion,
   Box,
   Button,
   Flex,
@@ -10,6 +9,8 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
   RangeSliderTrack,
+  Select,
+  Skeleton,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -17,8 +18,6 @@ import {
   Spacer,
   Switch,
   Text,
-  Select,
-  Skeleton,
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import CourseTeeTimes from "./CourseTeeTimes";

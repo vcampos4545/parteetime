@@ -2,13 +2,10 @@
 
 "use client";
 
-import { TeeTimeContext } from "@/components/TeeTimeContext";
-import { useContext } from "react";
+import SearchPage from "@/components/SearchPage";
 
 const Home: React.FC = () => {
-  const ctx = useContext(TeeTimeContext);
-
-  return <div>Index Route</div>;
+  return <SearchPage />;
 };
 
 export default Home;
