@@ -1,10 +1,10 @@
 import {
-  AccordionIcon,
   Button,
   Flex,
   Image,
   Spacer,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 interface CourseeTeeTimesProps {
@@ -23,9 +23,13 @@ export default function CourseTeeTimes({
   index,
   teeTimes,
 }: CourseeTeeTimesProps) {
+  const dropDown = useDisclosure();
+
   return (
     <Flex direction="column">
       <Flex
+        cursor="pointer"
+        onClick={dropDown.onToggle}
         direction="row"
         h="150px"
         borderRadius="20px"
@@ -49,15 +53,17 @@ export default function CourseTeeTimes({
           <Button>View Tee Times</Button>
         </Flex>
       </Flex>
-      {/* <Flex flexWrap="wrap" w="100%" gap="5px" align="center">
-        {teeTimes.teeTimes.map((teeTimes, index) => (
-          <Flex key={index} direction="column" w="32%">
-            <Text>{teeTimes.time}</Text>
-            <Text>${teeTimes.price}</Text>
-            <Button>Book</Button>
-          </Flex>
-        ))}
-      </Flex> */}
+      {dropDown.isOpen && (
+        <Flex flexWrap="wrap" w="100%" gap="5px" align="center">
+          {teeTimes.teeTimes.map((teeTimes, index) => (
+            <Flex key={index} direction="column" flexGrow={1}>
+              <Text>{teeTimes.time}</Text>
+              <Text>${teeTimes.price}</Text>
+              <Button>Book</Button>
+            </Flex>
+          ))}
+        </Flex>
+      )}
     </Flex>
   );
 }

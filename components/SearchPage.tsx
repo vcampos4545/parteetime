@@ -31,22 +31,11 @@ export default function SearchForm() {
   const ctx = useContext(TeeTimeContext);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const resp = await fetch(
-        "/api/teetimes?" +
-          new URLSearchParams({
-            date,
-            location: zipCode,
-          })
-      );
-      const data = await resp.json();
-      ctx.setCourseTeeTimes(data as CourseTeeTimes[]);
-      setIsLoading(false);
-    };
-    fetchData();
-  }, []);
+    searchTeeTimes();
+  }, [date]);
 
-  const handleSearch = async () => {
+  const searchTeeTimes = async () => {
+    setIsLoading(true);
     if (!date) {
       setErrorMessage("Please select a date.");
       return;
@@ -60,6 +49,7 @@ export default function SearchForm() {
     );
     const data = await resp.json();
     ctx.setCourseTeeTimes(data as CourseTeeTimes[]);
+    setIsLoading(false);
   };
 
   return (
@@ -103,7 +93,7 @@ export default function SearchForm() {
                 border="none"
                 color="white"
                 borderRadius={0}
-                onClick={handleSearch}
+                onClick={searchTeeTimes}
                 bg="#1AAF4B"
               >
                 Search
@@ -122,7 +112,7 @@ export default function SearchForm() {
           </Flex>
           <Flex direction="row" gap="40px">
             {/* Filters */}
-            <Filters date={date} />
+            <Filters date={date} setDate={setDate} />
 
             <Flex direction="column" flexGrow={1} gap="20px">
               <Flex direction="row" align="center">
@@ -133,9 +123,8 @@ export default function SearchForm() {
                 </Flex>
                 <Spacer />
                 <Text mr="20px">Sort by: </Text>
-                <Select placeholder="Select option" w="fit-content">
+                <Select placeholder="Distance" w="fit-content">
                   <option value="option1">Price</option>
-                  <option value="option2">Distance</option>
                   <option value="option3">Option 3</option>
                 </Select>
               </Flex>
@@ -148,6 +137,14 @@ export default function SearchForm() {
               )}
               {!isLoading && (
                 <Flex direction="column" gap="20px">
+                  <Text fontSize="25px">{new Date(date).toDateString()}</Text>
+                  {ctx.courseTeeTimes.map((courseTeeTimes, index) => (
+                    <CourseTeeTimes
+                      key={index}
+                      index={index}
+                      teeTimes={courseTeeTimes}
+                    />
+                  ))}
                   {ctx.courseTeeTimes.map((courseTeeTimes, index) => (
                     <CourseTeeTimes
                       key={index}
@@ -165,7 +162,13 @@ export default function SearchForm() {
   );
 }
 
-function Filters({ date }: { date: string }) {
+function Filters({
+  date,
+  setDate,
+}: {
+  date: string;
+  setDate: (date: string) => void;
+}) {
   const timeRange = "11am - 2pm";
   const priceRange = "$20 - $50";
   const distanceRange = "30mi";
@@ -173,6 +176,7 @@ function Filters({ date }: { date: string }) {
     <Flex
       direction="column"
       w="250px"
+      h="fit-content"
       border="0.5px solid #333"
       rounded="10px"
       p="20px"
@@ -184,7 +188,17 @@ function Filters({ date }: { date: string }) {
         rounded="10px"
         p="10px"
       >
-        {new Date(date).toDateString()}
+        <Input
+          h="100%"
+          w="fit-content"
+          border="none"
+          borderRadius={0}
+          type="date"
+          id="date"
+          name="date"
+          value={date}
+          onChange={(date) => setDate(date.target.value)}
+        />
       </Flex>
 
       <div style={{ width: "100%", border: "0.25px solid #444" }} />
@@ -248,10 +262,7 @@ function Filters({ date }: { date: string }) {
       <Flex direction="row" align="center">
         <Text>Golfers</Text>
         <Spacer />
-        <Select placeholder="Select option" w="fit-content">
-          <option selected value="option1">
-            Any
-          </option>
+        <Select placeholder="Any" w="fit-content">
           <option value="option2">1</option>
           <option value="option3">2</option>
           <option value="option2">3</option>
@@ -264,10 +275,7 @@ function Filters({ date }: { date: string }) {
       <Flex direction="row" align="center">
         <Text>Holes</Text>
         <Spacer />
-        <Select placeholder="Select option" w="fit-content">
-          <option selected value="option1">
-            Any
-          </option>
+        <Select placeholder="Any" w="fit-content">
           <option value="option2">9</option>
           <option value="option3">18</option>
         </Select>

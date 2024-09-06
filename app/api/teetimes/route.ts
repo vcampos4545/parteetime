@@ -88,8 +88,6 @@ async function getForeUpTimes(course: GolfCourse, date: string) {
   //   schedule_ids%5B%5D=9617&
   //   specials_only=0&
   //   api_key=no_limits`;
-
-  console.log(course.apiUrl.split("#")[0].split("/").pop());
   const schedule_id = course.apiUrl.split("#")[0].split("/").pop();
   const url = `https://foreupsoftware.com/index.php/api/booking/times?time=all&date=${date}&holes=all&players=0&booking_class=13254&schedule_id=${schedule_id}&schedule_ids%5B%5D=${schedule_id}&specials_only=0&api_key=no_limits`;
   const resp = await fetch(url);
@@ -163,14 +161,11 @@ export async function GET(request: Request) {
   for (const course of courses) {
     const teeTimes = await fetchTeeTimes(course, date);
     if (teeTimes) {
-      console.log("Tee times", teeTimes);
       courseTeeTimes.push({ ...course, teeTimes: teeTimes });
     } else {
       console.log("No tee times", teeTimes);
     }
   }
-
-  console.log("Course Tee Times: ", courseTeeTimes);
 
   // Filter based on ZIP code (in a real app, you'd fetch from a database or API)
   // const filteredTeeTimes = teeTimes.filter(() => zip === "12345");
